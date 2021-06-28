@@ -12,22 +12,22 @@ Elsőként olvasd végig az összes pontot!
 
     ```
     db.createCollection("movies",	{
-    		validator: {
-    				$jsonSchema: {
-    					required: ["title", "category", "director"],
-    					properties: {
-    							title: {bsonType: "string"},
-    							category: {
-    								enum: ["fantasy", "action", "romantic"],
-    								description: "required and must be one of the enum values"
-    							},
-    							director: {
-    								enum: ["Steven Spielberg", "Clint Eastwood", "James Cameron"],
-    								description: "required and must be one of the enum values"
-    							}
-    					}
-    			 }
-    		}
+    	validator: {
+    		$jsonSchema: {
+    		    required: ["title", "category", "director"],
+    			properties: {
+    				title: {bsonType: "string"},
+    				category: {
+    					enum: ["fantasy", "action", "romantic"],
+    					description: "required and must be one of the enum values"
+    				},
+    				director: {
+    					enum: ["Steven Spielberg", "Clint Eastwood", "James Cameron"],
+    					description: "required and must be one of the enum values"
+    				}
+    			}
+    	    }
+    	}
     })
     ```
 
