@@ -151,3 +151,24 @@
                       ]
     } )
     ```
+
+**Projection:** egy lekérdezés során van, hogy érzékeny adatainkat nem akarjuk elküldeni, vagy csak nincs okunk minden tulajdonságot lekérni egy dokumentumról. A szerveroldalról megjelenített adatok kezelése ezt a célt szolgálja.
+
+1. Írj egy lekérdezést, amely visszaadja az egy konkrét időpont előtt készült filmek címét és kategóriáját (más mező ne jelenjen meg), amelyeknek a kategóriája „ROMANTIC” vagy „ACTION” ($in operátor vagy $or operátor is).
+
+    ```
+    db.movies.find( 
+        { $and: [	
+                { releaseYear: {$lte: 2000} },
+                { $or: [
+                        { category: "ROMANTIC" },
+                        { category: "ACTION" }
+                  ] }
+          ]
+        },
+        { _id: 0, title: 1, category: 1 }
+    )
+    ```
+
+
+
