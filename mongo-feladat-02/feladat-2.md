@@ -179,5 +179,150 @@
 3. Írj egy lekérdezést, amely visszaadja a Steven Spielberg filmrendező által rendezett filmek adatait, kivéve a ratings-et. (Most elég, ha lekérdezed először a rendező film id-jait, majd a fő lekérdezésben megadott paraméterként az id-kat).
     ```
     ```
+**Adatbázis importálása .json fájlból**
 
+Adatbázisokkal történő munkák során gyakran előfordulhat, hogy biztonsági mentéseket kell végezni vagy különböző fájlokból kell importálni adatbázisba adatokat. Ehhez az egyik fő eszköz a „MongoDB DataBase Tool”, azon belül most a mongoimport segítségével fogunk gyakorolni.
 
+DataBase Tool: külön package-ben kell telepíteni a MongoDB egy újabb verziója óta. (Windows esetén érdemes lehet a MongoDB könyvtára „közelébe vagy mellé” telepíteni.)
+
+Windows: [https://docs.mongodb.com/database-tools/installation/installation-windows/](https://docs.mongodb.com/database-tools/installation/installation-windows/)
+
+Ubuntu: [https://docs.mongodb.com/database-tools/installation/installation-linux/](https://docs.mongodb.com/database-tools/installation/installation-linux/)
+
+Mac: [https://docs.mongodb.com/database-tools/installation/installation-macos/](https://docs.mongodb.com/database-tools/installation/installation-macos/)
+
+Ellenőrizzük, hogy sikeresen települt:
+
+Ubuntu, Mac => parancs a terminálban (nem a Mongo shell-ben): mongoimport --version
+
+Windows => meg kell keresnünk a terminálban a telepítés helyét, lépjünk be a bin könyvtárba, hogy lássuk a települt fájlokat. (Itt is futtatható már a mongoimport --version parancs.)
+
+![https://files.cdn.thinkific.com/file_uploads/219412/images/f16/243/016/1624372501752.jpg](https://files.cdn.thinkific.com/file_uploads/219412/images/f16/243/016/1624372501752.jpg)
+
+**mongoimport** parancs segítségével tudunk CSV, JSON fájlból importálni adatbázist.
+
+1. Ubuntun a terminálban (nem Mongo shell-ben!). Keressünk egy könyvtárat, ahová el akarjuk menteni az adatbázist, majd a terminálban írjuk be az alábbi parancsot:
+wget [https://raw.githubusercontent.com/mongodb/docs-assets/primer-dataset/primer-dataset.json](https://raw.githubusercontent.com/mongodb/docs-assets/primer-dataset/primer-dataset.json)
+WINDOWS estén keressük fel az oldalt: majd az oldalon jobb egér klikk, mentés másként, hogy lementsük a tartalmat.
+2. Utána mehet a parancs a terminálokban:
+**Ubuntu:** sudo mongoimport --db newdb --collection restaurants --file primer-dataset.json
+**Windows:** meg kell keresni a DataBase Tool forrás könyvtárát, és ott mehet a parancs:
+
+![https://files.cdn.thinkific.com/file_uploads/219412/images/de2/699/604/1624372501820.jpg](https://files.cdn.thinkific.com/file_uploads/219412/images/de2/699/604/1624372501820.jpg)
+
+**Parancsok:**
+
+- mongoimport: importálj adatokat a MongoDB szerverre
+- -db "newdb": a newdb nevű adatbázisba (ha nincs ilyen a gépen, létrehozza)
+- -collections restaurant: a „restaurants” listába mentse az adatokat
+- -file primer-dataset.json: a primer-dataset.json fájlból
+
+Megjegyzés: a parancs végére a relatív vagy teljes elérési utat kell írni, ha más könyvtárban lenne a .json fájl.
+
+1. Ellenőrizzük parancsokkal, hogy sikerült-e az import:
+- use newdb
+- db.restaurants.count() (számolja meg, hány elemünk van)
+
+![https://files.cdn.thinkific.com/file_uploads/219412/images/a1f/7c1/ead/1624372896519.jpg](https://files.cdn.thinkific.com/file_uploads/219412/images/a1f/7c1/ead/1624372896519.jpg)
+
+**Gyakorlás nagyobb tömegű adatokon**
+
+1. Kérdezzük le a restaurants listánkból a Brooklyn kerületben („borough”) lévő éttermek neveit, címét és kerületét. Az egyedi azonosító ne jelenjen meg! Használjuk a pretty() parancsot az olvashatóbb megjelenítéshez!
+
+    ```
+    db.restaurants.find({borough: "Brooklyn"}, {_id:0, name: 1, "address.street":1, "address.zipcode": 1, }).pretty()
+    ```
+
+2. Kérdezd le a Queens kerületben lévő olyan éttermek neveit, kerületét és a kapott osztályzatait („grades”), amelyeknek a nevében benne van a „Kitchen” szó (tipp: használd a $regex operátort)!
+
+    ```
+    db.restaurants.find(
+      {
+        name: { $regex: /kitchen/i },
+        borough: "Queens"
+      },
+      {
+        _id:0, name: 1,
+        "address.zipcode": 1,
+        "grades.grade":1
+      }
+    ).pretty()
+    ```
+
+3. Ellenőrzés gyanánt számold meg, hány darab van belőlük! Ismételd meg a fenti parancsot, a pretty() parancs helyet használd a count() parancsot! 144 étteremnek kell lennie.
+
+    ```
+    db.restaurants.find(
+      {
+        name: { $regex: /kitchen/i },
+        borough: "Queens"
+      },
+      {
+        _id:0, name: 1,
+        "address.zipcode": 1,
+        "grades.grade":1
+      }
+    ).count()
+    ```
+
+4. Kérdezd le azokat az éttermeket, amelyeknek a konyhája („cuisine”) NEM amerikai és az Astoria Boulevard utcában vannak. A szerver csak a cuisine és az address mezőket adja vissza.
+
+    ```
+    db.restaurants.find(
+      {
+        cuisine: { $ne: "American"},
+        "address.street": "Astoria Boulevard"
+      },
+      {
+        _id:0, 
+    		cuisine: 1,
+        address: 1,
+      }
+    ).pretty()
+    ```
+
+5. Kérdezd le azokat az éttermeket, amelyek pizzát („pizza”) árulnak és NEM a következő kerületekben vannak: Brooklyn, Queens, Manhattan!
+
+    ```
+    db.restaurants.find(
+      {
+        cuisine: "Pizza",
+        borough: { $nin: ["Brooklyn", "Queens", "Manhattan"]},
+      },
+      {
+        _id:0, 
+    		name: 1,
+    		borough: 1,
+      }
+    )
+    ```
+
+6. Kérdezd le azoknak az éttermeknek a címét és nevét, amelyeknek a nevében benne van a „Pizza” szó és az irányítószámuk: 11369!
+
+    ```
+    db.restaurants.find(
+      {
+        name: { $regex: /pizza/i },
+        "address.zipcode": "11369"
+      },
+      {
+        _id:0, 
+    		name: 1,
+    		address: 1
+      }
+    )
+    ```
+
+7. Számold meg, hány „Tony”-val kezdődő névvel rendelkező étterem van az adatbázisban! (40 db a helyes válasz)
+
+    ```
+    db.restaurants.find(
+      {
+        name: { $regex: /^Tony/ig }
+      }
+    ).count()
+
+    Az eredmény erre a keresésre: 32
+    ```
+
+Játssz tovább az adatbázissal tetszőlegesen! Találj ki további lekérdezéseket!
