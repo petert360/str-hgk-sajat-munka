@@ -163,17 +163,17 @@ Elsőként olvasd végig az összes pontot!
     ```jsx
     db.movies.update(
       { title: "Many Rivers to Cross" },
-      { $push: { ratings: [ 3, 4 ] } }
+      { $push: { ratings: { $each: [ 3, 4 ] } } }
     )
 
     db.movies.update(
       { title: "Mr. Klein (Monsieur Klein)" },
-      { $push: { ratings: [ 4, 2 ] } }
+      { $push: { ratings: { $each: [ 4, 2 ] } } }
     )
 
     db.movies.update(
       { title: "Welfare" },
-      { $push: { ratings: [ 5, 4 ] } }
+      { $push: { ratings: { $each: [ 5, 4 ] } } }
     )
     ```
 
