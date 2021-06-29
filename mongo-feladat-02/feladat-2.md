@@ -158,7 +158,7 @@
 
     ```
     db.movies.find( 
-        { $and: [	
+        { $and: [  
                 { releaseYear: {$lte: 2000} },
                 { $or: [
                         { category: "ROMANTIC" },
@@ -275,7 +275,7 @@ Megjegyzés: a parancs végére a relatív vagy teljes elérési utat kell írni
       },
       {
         _id:0, 
-    		cuisine: 1,
+        cuisine: 1,
         address: 1,
       }
     ).pretty()
@@ -291,8 +291,8 @@ Megjegyzés: a parancs végére a relatív vagy teljes elérési utat kell írni
       },
       {
         _id:0, 
-    		name: 1,
-    		borough: 1,
+        name: 1,
+        borough: 1,
       }
     )
     ```
@@ -307,8 +307,8 @@ Megjegyzés: a parancs végére a relatív vagy teljes elérési utat kell írni
       },
       {
         _id:0, 
-    		name: 1,
-    		address: 1
+        name: 1,
+        address: 1
       }
     )
     ```
