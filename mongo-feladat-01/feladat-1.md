@@ -152,9 +152,9 @@ Elsőként olvasd végig az összes pontot!
 4. Frissítsd a listádat (updateMany), mindenki kapjon egy „ratings” mezőt, amely egy üres listát tartalmaz (1-5 ig lehet benne tárolni a szavazatokat)!
 
     ```jsx
-    db.movies.updateMany(
-    {},
-    {$set: {ratings: [] }}
+      db.movies.updateMany(
+      {},
+      {$set: {ratings: [] }}
     )
     ```
 
@@ -181,8 +181,8 @@ Elsőként olvasd végig az összes pontot!
 
     ```jsx
     db.movies.updateMany(
-    {},
-    {$set: {releaseYear: 2000 }}
+      {},
+      {$set: {releaseYear: 2000 }}
     )
     ```
 
@@ -190,8 +190,18 @@ Elsőként olvasd végig az összes pontot!
 
     ```jsx
     db.movies.updateMany(
-    { category: "action" },
-    {$set: {category: "ACTION" }}
+      { category: "action" },
+      {$set: {category: "ACTION" }}
+    )
+
+    db.movies.updateMany(
+      { category: "romantic" },
+      {$set: {category: "ROMANTIC" }}
+    )
+
+    db.movies.updateMany(
+      { category: "fantasy" },
+      {$set: {category: "FANTASY" }}
     )
     ```
 
