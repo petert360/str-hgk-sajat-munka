@@ -17,6 +17,32 @@ module.exports = class ProductService {
         }
         let sum = 0
         this.products.forEach(item => (sum += item.price * item.count))
-        return sumAdatok 
+        return sum
     }
+
+    async getAvgPrice() {
+        if (!this.products) {
+            await this.init()
+        }
+        let sum = 0
+        let count = 0
+        this.products.forEach(item => {
+            sum += item.price * item.count
+            count += Number(item.count)
+        })
+
+        return (sum/count).toFixed(2)
+        /*this.getSumOfAllProductsPrice()
+            .then (result => result / Object.keys(this.products).length)*/
+    }
+
+    async lessThan(count) {
+        if (!this.products) {
+            await this.init()
+        }
+        return this.products.filter(item => item.count<count)
+
+    }
+
 }
+
