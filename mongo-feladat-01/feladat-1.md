@@ -11,23 +11,23 @@ Elsőként olvasd végig az összes pontot!
 2. Hozz létre benne egy movies listát!
 
     ```
-    db.createCollection("movies",	{
-    		validator: {
-    				$jsonSchema: {
-    					required: ["title", "category", "director"],
-    					properties: {
-    							title: {bsonType: "string"},
-    							category: {
-    								enum: ["fantasy", "action", "romantic"],
-    								description: "required and must be one of the enum values"
-    							},
-    							director: {
-    								enum: ["Steven Spielberg", "Clint Eastwood", "James Cameron"],
-    								description: "required and must be one of the enum values"
-    							}
-    					}
-    			 }
-    		}
+    db.createCollection("movies",  {
+        validator: {
+            $jsonSchema: {
+              required: ["title", "category", "director"],
+              properties: {
+                  title: {bsonType: "string"},
+                  category: {
+                      enum: ["fantasy", "action", "romantic"],
+                      description: "required and must be one of the enum values"
+                  },
+                  director: {
+                      enum: ["Steven Spielberg", "Clint Eastwood", "James Cameron"],
+                      description: "required and must be one of the enum values"
+                  }
+              }
+           }
+        }
     })
     ```
 
@@ -162,18 +162,18 @@ Elsőként olvasd végig az összes pontot!
 
     ```jsx
     db.movies.update(
-    	{ title: "Many Rivers to Cross" },
-    	{ $push: { ratings: [ 3, 4 ] } }
+      { title: "Many Rivers to Cross" },
+      { $push: { ratings: [ 3, 4 ] } }
     )
 
     db.movies.update(
-    	{ title: "Mr. Klein (Monsieur Klein)" },
-    	{ $push: { ratings: [ 4, 2 ] } }
+      { title: "Mr. Klein (Monsieur Klein)" },
+      { $push: { ratings: [ 4, 2 ] } }
     )
 
     db.movies.update(
-    	{ title: "Welfare" },
-    	{ $push: { ratings: [ 5, 4 ] } }
+      { title: "Welfare" },
+      { $push: { ratings: [ 5, 4 ] } }
     )
     ```
 
@@ -199,7 +199,7 @@ Elsőként olvasd végig az összes pontot!
 
     ![https://files.cdn.thinkific.com/file_uploads/219412/images/294/ead/258/1624356077337.jpg](https://files.cdn.thinkific.com/file_uploads/219412/images/294/ead/258/1624356077337.jpg)
 
-    ![./scr1.png](scr1.png)
+    ![./scr1.jpg](scr1.jpg)
 
 9. Kicsit **algoritmizáljunk**! Nézd meg, hogy melyik könyvtárban állsz a pwd() parancs segítségével. Hozz létre egy .js kiterjesztésű szöveges fájlt az adott könyvtárban! (Használhatsz majd abszolút elérési utat is később.) Bármilyen szerkesztő, IDEA megfelelő a szerkesztésre. Készíts el benne egy függvényt (ne felejtsd el meghívni a fájl végén), amely tartalmazzon egy listát benne a **te filmjeid** címeivel (figyelj a pontos címek megadására). Kiindulásként egy kis „segédkép”:
 
@@ -219,7 +219,7 @@ Elsőként olvasd végig az összes pontot!
             'PTU',
             'In Time',
         ];
-    		
+        
     };
 
     setYearToMovies();
@@ -283,4 +283,4 @@ Elsőként olvasd végig az összes pontot!
     */
     ```
     
-    ![./scr2.png](scr2.png)
+    ![./scr2.jpg](scr2.jpg)
