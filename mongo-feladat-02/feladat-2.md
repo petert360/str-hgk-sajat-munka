@@ -170,5 +170,14 @@
     )
     ```
 
+2. Írj egy lekérdezést a directors listára, amelyben elkéred a rendezők nevét és a filmek _id-ját (más mező ne jelenjen meg).
+
+    ```
+    db.directors.find({}, {_id: 0, name: 1, movies: 1})
+    ```
+
+3. Írj egy lekérdezést, amely visszaadja a Steven Spielberg filmrendező által rendezett filmek adatait, kivéve a ratings-et. (Most elég, ha lekérdezed először a rendező film id-jait, majd a fő lekérdezésben megadott paraméterként az id-kat).
+    ```
+    ```
 
 
