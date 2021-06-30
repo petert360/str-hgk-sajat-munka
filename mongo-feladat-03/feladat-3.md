@@ -54,3 +54,26 @@
     ```
     db.movies.find( {category: "ROMANTIC"}, {_id:0, title:1, releaseYear:1} ).sort({releaseYear:-1})[1]
     ```
+
+10. Készíts egy scriptet egy javaScript fájlban! A script feladata, hogy egyetlen függvényben lekérdezze a mozifilmek számát kimentve egy változóba, majd ennek segítségével egy ciklus keretében 3-asával lapozva írja ki a konzolra a filmek címeit és kategóriáit (kisbetűvel a kategóriát) a következő módon =>
+
+    - pl.: „Terminator : action movie”
+    - Minden egyes oldal alján jelenjen meg a szöveg: --page over--!
+    - Segítségül egy lehetséges eredmény:
+
+
+    ![https://files.cdn.thinkific.com/file_uploads/219412/images/22f/b77/c9e/1624373697510.jpg](https://files.cdn.thinkific.com/file_uploads/219412/images/22f/b77/c9e/1624373697510.jpg)
+
+    ```
+    const paging = () => {
+        let listOfMovies = db.movies.find();
+        let numberOfMovies = listOfMovies.count();
+        for (let i = 0; i < numberOfMovies; i+=1) {
+            if (i>0 && i%3 === 0) print('--page over--');
+            print(listOfMovies[i].title, ":", listOfMovies[i].category.toLowerCase(), 'movie');
+        }
+    }
+
+    paging();
+    // load("paging.js")
+    ```
