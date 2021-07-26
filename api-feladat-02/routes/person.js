@@ -81,5 +81,34 @@ fetch('http://localhost:8000/person', {
     .then(d => console.log(d));
 */
 
+/*
+3. Implementáld a `PUT /person/:id/:vaccine` végpontot, amellyel megadhatjuk,
+hogy az adott `id`-val rendelkező személy `vaccine` típusú oltást kapott.
+*/
+// UPDATE
+router.put('/:id/:vaccine', async (req, res, next) => {
+    const data = await personService.read();
+    const id = req.params.id;
+    const vaccine = req.params.vaccine;
+    // az id-t számmá alakítva vizsgáljuk
+    const index = data.findIndex(p => p.id === Number(id));
+    data[index].vaccine = vaccine;
+    await personService.save(data);
+    // Sikeres művelet kód
+    res.status(200);
+    res.json(data[index]);
+});
+
+/* TESZT:
+fetch('http://localhost:8000/person/9/Sputnik', {
+    method: 'PUT',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+})
+    .then(r => r.json())
+    .then(d => console.log(d));
+*/
+
 // exportáljuk a modult
 module.exports = router;
