@@ -59,18 +59,6 @@
             "first_name": "Kev",
             "last_name": "Vaun",
             "vaccine": "AstraZeneca"
-        },
-        {
-            "first_name": "John",
-            "last_name": "Doe",
-            "vaccine": "Pfizer",
-            "id": 11
-        },
-        {
-            "first_name": "Jane",
-            "last_name": "Doe",
-            "vaccine": "Pfizer",
-            "id": 12
         }
     ]
 }

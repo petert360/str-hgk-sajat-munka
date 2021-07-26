@@ -59,6 +59,7 @@ router.post('/', async (req, res, next) => {
     // Az utolsó indexű objektum id-t kiolvassuk és hozzáadunk egyet.
     newPerson.id = data[data.length - 1].id + 1;
     data.push(newPerson);
+    await personService.save(data);
     // Sikeres erőforrás létrehozás kódja
     res.status(201);
     res.json(newPerson);

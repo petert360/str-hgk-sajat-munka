@@ -13,4 +13,16 @@ const read = async () => {
     return JSON.parse(jsonData).person;
 };
 
-module.exports = { read };
+// kiírjuk az argumentumban megadott objektumot
+// arrayként érkezik,és itt alakítom objektummá
+const save = async (list = []) => {
+    const obj = { person: list };
+    await fsp.writeFile(
+        join('.', 'database', 'db.json'),
+        JSON.stringify(obj, null, 4),
+        'utf8'
+    );
+    return true;
+};
+
+module.exports = { read, save };
