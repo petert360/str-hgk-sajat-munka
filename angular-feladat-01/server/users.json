@@ -1,0 +1,44 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "first_name": "Charlie",
+      "last_name": "Firpo",
+      "email": "seyden0@merriam-webster.com",
+      "password": "$2a$10$KKzAQMXlYJSq7VMlCKcJb.cIVpW4J22j482HLbglgpvTarJZUQc1C",
+      "role": "2"
+    },
+    {
+      "id": 2,
+      "first_name": "Finn",
+      "last_name": "Upjohn",
+      "email": "fupjohn1@paypal.com",
+      "password": "$2a$10$xW1vJhe3xczrnTQOZYlaY.DV/UbYal1.lc2d9ip6tw3.6cWv8XoQ.",
+      "role": "1"
+    },
+    {
+      "id": 3,
+      "first_name": "Nickey",
+      "last_name": "Tyt",
+      "email": "ntyt2@psu.edu",
+      "password": "$2a$10$eZMp/S6cJtgOTy94BKQaAun/m.f3eIu8smIpIi2tvQUgGAiwxfDsy",
+      "role": 3
+    },
+    {
+      "id": 4,
+      "first_name": "Goldia",
+      "last_name": "Bloodworthe",
+      "email": "gbloodworthe3@mail.ru",
+      "password": "$2a$10$XCaD5qH6cy8b2Zs6.X21dON.WZXC.4uYI6UuGhyqSWzMSyGJ9fQQ6",
+      "role": 1
+    },
+    {
+      "id": 5,
+      "first_name": "Berti",
+      "last_name": "Farthing",
+      "email": "bfarthing4@nymag.com",
+      "password": "$2a$10$zl6J2sTRSOemUNRZ7Iq3DuxNZwCyi4AAOp6jB2V/U7bEM7OlJVqF2",
+      "role": 3
+    }
+ ]
+}
