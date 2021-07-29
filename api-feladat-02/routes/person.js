@@ -110,5 +110,30 @@ fetch('http://localhost:8000/person/9/Sputnik', {
     .then(d => console.log(d));
 */
 
+// Implementáld a DELETE /person/:vaccine végpontot,
+// amely a vaccine típusú oltással rendelkező személyeket törli az adatbázisból.
+router.delete('/:vaccine', async (req, res, next) => {
+    const data = await personService.read();
+    const vaccine = req.params.vaccine;
+    // a beolvasott adatokbók azokat szűrjük,
+    // amelyeknek nem e kérdéses vakcinát tartalmazzák
+    filteredData = data.filter(item => item.vaccine !== vaccine)
+    await personService.save(filteredData);
+    // Sikeres művelet kód
+    res.status(200);
+    res.json(true);
+});
+
+/* Teszt
+fetch('http://localhost:8000/person/none', {
+    method: 'DELETE',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+})
+    .then(r => r.json())
+    .then(d => console.log(d));
+*/
+
 // exportáljuk a modult
 module.exports = router;

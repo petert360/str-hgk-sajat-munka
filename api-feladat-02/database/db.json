@@ -49,28 +49,10 @@
             "vaccine": "Sinopharm"
         },
         {
-            "id": 9,
-            "first_name": "Cathy",
-            "last_name": "Bellis",
-            "vaccine": "none"
-        },
-        {
             "id": 10,
             "first_name": "Kev",
             "last_name": "Vaun",
             "vaccine": "AstraZeneca"
-        },
-        {
-            "first_name": "John",
-            "last_name": "Doe",
-            "vaccine": "Pfizer",
-            "id": 11
-        },
-        {
-            "first_name": "Jane",
-            "last_name": "Doe",
-            "vaccine": "Sputnik",
-            "id": 12
         }
     ]
 }
