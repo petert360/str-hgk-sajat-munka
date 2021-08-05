@@ -47,15 +47,8 @@ router.get('/:id/vaccinated', async (req, res, next) => {
     const data = await personService.read();
     const person = data.find(item => item.id === Number(req.params.id));
     if (!person) {
-        //saját hibakezelő alkalmazása
-        //return next(err)
-        //throw new Error('Hiba')
-        try {
-            throw new Error('Hiba');
-        } catch (err) {
-            next(err);
-        }
-        
+        next(new createError.NotFound('Person was not found'));
+        //next(new createError('Unknown'));
     } else {
         res.json({ result: person.vaccine !== 'none' ? true : false });
     }
@@ -101,11 +94,17 @@ router.put('/:id/:vaccine', async (req, res, next) => {
     const vaccine = req.params.vaccine;
     // az id-t számmá alakítva vizsgáljuk
     const index = data.findIndex(p => p.id === Number(id));
-    data[index].vaccine = vaccine;
-    await personService.save(data);
-    // Sikeres művelet kód
-    res.status(200);
-    res.json(data[index]);
+    if (!index || index === -1) {
+        next(
+            new createError.NotFound(`Person with index #${id} was not found`)
+        );
+    } else {
+        data[index].vaccine = vaccine;
+        await personService.save(data);
+        // Sikeres művelet kód
+        res.status(200);
+        res.json(data[index]);
+    }
 });
 
 /* TESZT:
@@ -144,14 +143,18 @@ fetch('http://localhost:8000/person/none', {
     .then(d => console.log(d));
 */
 
-//saját hibakezelő middleware definiálása
+// Implementálj egy hibakezelő middleware függvényt, amely kilogolja a valódi hibát a konzolra,
+// majd a kliens számára valamilyen - a hibától független - átlátszó kifogást küld vissza üzenetben.
+// Ha nincs más státuszkód definiálva, akkor adjon 500-as hibakódot.
 router.use((err, req, res, next) => {
     console.error(`ERROR ${err.statusCode}: ${err.message}`);
-    res.status(err.statusCode);
-    res.json({
+    res.status(err.statusCode || 500);
+    res.send('<h1>Error occurred<h1>')
+    /* res.json({
         hasError: true,
+        code: err.statusCode,
         message: err.message,
-    });
+    }); */
 });
 
 // exportáljuk a modult
