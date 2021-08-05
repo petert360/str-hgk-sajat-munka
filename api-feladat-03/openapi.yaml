@@ -1,0 +1,53 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: ESZT (Egészségügyi Szuri Tár) API
+  description: api-feladat-01
+servers:
+  - url: http://localhost:8000
+paths:
+  /person/count:
+    get:
+      description: Returns the count of vaccinated people
+      responses:
+        '200':
+          description: Number of vaccinated people
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/Count'
+  /person/vaccinated:
+    get:
+      description: Returns the list of vaccinated persons
+      responses:
+        '200':
+          description: List of vaccinated people
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/Vaccinated'
+components:
+  schemas:
+    Count:
+      type: object
+      required:
+        - count
+      properties:
+        count:
+          type: number
+    Vaccinated:
+      type: object
+      required:
+        - first_name
+        - last_name
+        - vaccince
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        vaccine:
+          type: string
