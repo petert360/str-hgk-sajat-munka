@@ -1,0 +1,15 @@
+api-feladat-01
+├─ app.js
+├─ openapi.yaml
+├─ package-lock.json
+├─ package.json
+├─ README.md
+├─ tree.txt
+├─ database
+│  └─ db.json
+├─ docs
+│  └─ swagger.yaml
+├─ routes
+│  └─ person.js
+└─ service
+   └─ person.service.js
