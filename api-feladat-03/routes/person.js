@@ -1,16 +1,17 @@
 // Express modul importálása és a létrehozunk egy express.Router objektumot
 const express = require('express');
 const router = express.Router();
+const createError = require('http-errors');
 
 // Service modul importálása
 const personService = require('../service/person.service');
 
 // definiáljuk az útválasztást HTTP GET kérésre
-// ez jelen esetben minden  GET /person/ kérésre lefut
+// ez jelen esetben minden GET /person/ kérésre lefut
 // átalakírjuk a GET kérést, hogy aszinkron módon kérjük le az adatokat
 router.get('/', async (req, res, next) => {
     const data = await personService.read();
-    console.log(typeof data);
+    //console.log(typeof data);
     res.json(data);
 });
 
@@ -46,7 +47,15 @@ router.get('/:id/vaccinated', async (req, res, next) => {
     const data = await personService.read();
     const person = data.find(item => item.id === Number(req.params.id));
     if (!person) {
-        res.json({ result: 'person not found' });
+        //saját hibakezelő alkalmazása
+        //return next(err)
+        //throw new Error('Hiba')
+        try {
+            throw new Error('Hiba');
+        } catch (err) {
+            next(err);
+        }
+        
     } else {
         res.json({ result: person.vaccine !== 'none' ? true : false });
     }
@@ -117,7 +126,7 @@ router.delete('/:vaccine', async (req, res, next) => {
     const vaccine = req.params.vaccine;
     // a beolvasott adatokbók azokat szűrjük,
     // amelyeknek nem e kérdéses vakcinát tartalmazzák
-    filteredData = data.filter(item => item.vaccine !== vaccine)
+    filteredData = data.filter(item => item.vaccine !== vaccine);
     await personService.save(filteredData);
     // Sikeres művelet kód
     res.status(200);
@@ -134,6 +143,16 @@ fetch('http://localhost:8000/person/none', {
     .then(r => r.json())
     .then(d => console.log(d));
 */
+
+//saját hibakezelő middleware definiálása
+router.use((err, req, res, next) => {
+    console.error(`ERROR ${err.statusCode}: ${err.message}`);
+    res.status(err.statusCode);
+    res.json({
+        hasError: true,
+        message: err.message,
+    });
+});
 
 // exportáljuk a modult
 module.exports = router;
