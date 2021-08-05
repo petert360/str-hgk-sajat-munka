@@ -9,6 +9,10 @@ const port = 8000;
 const bodyParser = require('./node_modules/body-parser');
 app.use(bodyParser.json());
 
+// mongoose importálása
+const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
+
 // router modulok importálása a /routes könyvtárból
 const personRouter = require('./routes/person');
 
@@ -16,6 +20,20 @@ const personRouter = require('./routes/person');
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 const swaggerDocument = YAML.load('./docs/swagger.yaml');
+
+// csatlakozás a lokális mongoDB-hez
+mongoose
+    .connect('mongodb://localhost:27017/myapp', {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .then(() => {
+        console.log('Connected to MongoDB');
+    })
+    .catch(err => {
+        console.error(err);
+        process.exit();
+    });
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
