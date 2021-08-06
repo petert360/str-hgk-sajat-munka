@@ -6,6 +6,9 @@ const createError = require('http-errors');
 // Service modul importálása
 const personService = require('../service/person.service');
 
+// Person schema importálása
+const Person = require('../models/person.model')
+
 // definiáljuk az útválasztást HTTP GET kérésre
 // ez jelen esetben minden GET /person/ kérésre lefut
 // átalakírjuk a GET kérést, hogy aszinkron módon kérjük le az adatokat
