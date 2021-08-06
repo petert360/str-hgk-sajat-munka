@@ -7,7 +7,7 @@ const createError = require('http-errors');
 const personService = require('../service/person.service');
 
 // Person schema importálása
-const Person = require('../models/person.model')
+const Person = require('../models/person.model');
 
 // definiáljuk az útválasztást HTTP GET kérésre
 // ez jelen esetben minden GET /person/ kérésre lefut
@@ -46,14 +46,13 @@ router.get('/vaccinated', async (req, res, next) => {
 });
 
 // READ: visszaadja, hogy az adott `id`-val rendelkező személy rendelkezik-e oltással
-router.get('/:_id/vaccinated', async (req, res, next) => {
-    const data = await Person.find();
-    const person = data.find(item => item._id === req.params._id);
-    if (!person) {
+router.get('/:id/vaccinated', async (req, res, next) => {
+    const data = await Person.findById(req.params.id)
+    if (!data) {
         next(new createError.NotFound('Person was not found'));
         //next(new createError('Unknown'));
     } else {
-        res.json({ result: person.vaccine !== 'none' ? true : false });
+        res.json({ result: data.vaccine !== 'none' ? true : false });
     }
 });
 
@@ -102,22 +101,18 @@ hogy az adott `id`-val rendelkező személy `vaccine` típusú oltást kapott.
 */
 // UPDATE
 router.put('/:id/:vaccine', async (req, res, next) => {
-    const data = await personService.read();
+    // const data = await personService.read();
     const id = req.params.id;
     const vaccine = req.params.vaccine;
-    // az id-t számmá alakítva vizsgáljuk
-    const index = data.findIndex(p => p.id === Number(id));
-    if (!index || index === -1) {
-        next(
-            new createError.NotFound(`Person with index #${id} was not found`)
-        );
-    } else {
-        data[index].vaccine = vaccine;
-        await personService.save(data);
-        // Sikeres művelet kód
-        res.status(200);
-        res.json(data[index]);
-    }
+    const update = { vaccine: vaccine };
+    return Person
+        .findByIdAndUpdate(id, update)
+        .then(person => {
+            res.json(person);
+        })
+        .catch(err => {
+            next(new createError.InternalServerError(err.message));
+        });
 });
 
 /* TESZT:
