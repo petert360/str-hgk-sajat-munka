@@ -59,19 +59,22 @@ router.post('/', async (req, res, next) => {
     // megvizsgáljuk, hogy a bodyban érkezett adatok validak-e
     const { last_name, first_name, vaccine } = req.body;
     // ha valamelyik hiányzik, hibát ad vissza
-    if (!last_name || !first_name || !email) {
+    if (!last_name || !first_name || !vaccine) {
         return next(new createError.BadRequest('Missing properties'));
     }
 
-    const data = await personService.read();
-    const newPerson = req.body;
-    // Az utolsó indexű objektum id-t kiolvassuk és hozzáadunk egyet.
-    newPerson.id = data[data.length - 1].id + 1;
-    data.push(newPerson);
-    await personService.save(data);
-    // Sikeres erőforrás létrehozás kódja
-    res.status(201);
-    res.json(newPerson);
+    // létrehozunk egy új mongoDB dokumentumot
+    const newPerson = new Person({
+        firstName: req.body['first_name'],
+        lastName: req.body['last_name'],
+        email: req.body['vaccine'],
+    });
+
+    // elmentjük az adatbázisba
+    newPerson.save().then(data => {
+        res.status(201);
+        res.json(data);
+    });
 });
 
 /* Teszt
