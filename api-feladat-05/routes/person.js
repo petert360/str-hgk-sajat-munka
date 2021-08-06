@@ -68,9 +68,9 @@ router.post('/', async (req, res, next) => {
 
     // létrehozunk egy új mongoDB dokumentumot
     const newPerson = new Person({
-        firstName: req.body['first_name'],
-        lastName: req.body['last_name'],
-        email: req.body['vaccine'],
+        first_name: req.body['first_name'],
+        last_name: req.body['last_name'],
+        vaccine: req.body['vaccine'],
     });
 
     // elmentjük az adatbázisba
