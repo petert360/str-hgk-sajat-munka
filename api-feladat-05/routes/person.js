@@ -13,7 +13,7 @@ const Person = require('../models/person.model')
 // ez jelen esetben minden GET /person/ kérésre lefut
 // átalakírjuk a GET kérést, hogy aszinkron módon kérjük le az adatokat
 router.get('/', async (req, res, next) => {
-    const data = await personService.read();
+    const data = await Person.find();
     //console.log(typeof data);
     res.json(data);
 });
@@ -31,7 +31,7 @@ router.get('/count', async (req, res, next) => {
 
 // ez a végpont egy objektumot ad vissza JSON formában
 router.get('/count', async (req, res, next) => {
-    const data = await personService.read();
+    const data = await Person.find();
     const obj = {
         count: data.filter(item => item.vaccine && item.vaccine !== 'none')
             .length,
@@ -40,15 +40,15 @@ router.get('/count', async (req, res, next) => {
 });
 
 router.get('/vaccinated', async (req, res, next) => {
-    const data = await personService.read();
+    const data = await Person.find();
     const obj = data.filter(item => item.vaccine && item.vaccine !== 'none');
     res.json(obj);
 });
 
 // READ: visszaadja, hogy az adott `id`-val rendelkező személy rendelkezik-e oltással
-router.get('/:id/vaccinated', async (req, res, next) => {
-    const data = await personService.read();
-    const person = data.find(item => item.id === Number(req.params.id));
+router.get('/:_id/vaccinated', async (req, res, next) => {
+    const data = await Person.find();
+    const person = data.find(item => item._id === req.params._id);
     if (!person) {
         next(new createError.NotFound('Person was not found'));
         //next(new createError('Unknown'));
