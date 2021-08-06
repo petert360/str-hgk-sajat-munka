@@ -60,7 +60,7 @@ router.post('/', async (req, res, next) => {
     const { last_name, first_name, vaccine } = req.body;
     // ha valamelyik hiányzik, hibát ad vissza
     if (!last_name || !first_name || !email) {
-            return next(new createError.BadRequest('Missing properties'));
+        return next(new createError.BadRequest('Missing properties'));
     }
 
     const data = await personService.read();
@@ -156,7 +156,7 @@ fetch('http://localhost:8000/person/none', {
 router.use((err, req, res, next) => {
     console.error(`ERROR ${err.statusCode}: ${err.message}`);
     res.status(err.statusCode || 500);
-    res.send('<h1>Error occurred<h1>')
+    res.send('<h1>Error occurred<h1>');
     /* res.json({
         hasError: true,
         code: err.statusCode,
