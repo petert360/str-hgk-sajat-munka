@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
-const ObjectId = Schema.Types.ObjectId;
+const Schema = mongoose.Schema;
 
-const VaccineSchema = mongoose.Schema(
+const VaccineSchema = Schema(
     {
-        id: { type: ObjectId },
+        id: { type: Schema.Types.ObjectId },
         name: { type: String },
         efficiency: { type: Number, min: 0, max: 100 },
     },
@@ -11,11 +11,3 @@ const VaccineSchema = mongoose.Schema(
 );
 
 module.exports = mongoose.model('Vaccine', VaccineSchema);
-/* 
-{
-    "id": 1,
-    "first_name": "Worthy",
-    "last_name": "Penzer",
-    "vaccine": "Pfizer"
-},
-*/
