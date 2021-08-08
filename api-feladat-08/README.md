@@ -1,18 +1,18 @@
-## **A kész feladat feltöltésének helye:**
+**A kész feladat feltöltésének helye:**
 
 Repo: **str-hgk-sajat-munka**
 
-Almappa: **api-feladat-05**
+Almappa: **api-feladat-08**
 
-```
-Például:http://github.com/cherryApp/str-hgk-sajat-munka/api-feladat-05
-```
+Például: `http://github.com/cherryApp/str-hgk-sajat-munka/api-feladat-08`
 
-Módosítsuk az egyszerű, működő ESZT (Egészségügyi Szuri Tár) API alkalmazást úgy, hogy MongoDB-t használjon az adatok tárolására.
+Folytassuk az egyszerű, működő ESZT (Egészségügyi Szuri Tár) API alkalmazást!
 
-1. Hozz létre egy új MongoDB adatbázist! (használhatsz Atlas-t vagy akár lokális MongoDB példányt is)
-2. Telepítsd a szükséges csomagokat, készítsd el a `Person` sémát!
-3. Módosítsd a tanult módon az alkalmazást, hogy az a MongoDB-hez csatlakozzon, töröld a JSON adatbázist!
-4. Módosítsd a végpontokat, hogy az adatbázissal dolgozzanak!
-    - Tipp 1: [countDocuments()](https://docs.mongodb.com/manual/reference/method/db.collection.countDocuments/) elemek számolásához
-    - Tipp 2: [$exists](https://docs.mongodb.com/manual/reference/operator/query/exists/) operátor
+1. Készítsd el a `Vaccine` sémát, rendelkezzen a következő mezőkkel:
+    - `id`: egyedi azonosító (ObjectId)
+    - `name`: oltás neve (string)
+    - `efficiency`: oltás hatékonysága, 1-100 közötti szám (number)
+2. Módosítsd a `Person` sémát: a `vaccine` mező egy nested objektum legyen egy `vaccine` és `count` property-vel:
+    - `count`: egy szám, hogy az adott személy hány dózist kapott meg
+    - `vaccine`: referencia (id) egy `Vaccine` típusú dokumentumra
+3. Módosítsd a `PersonService` (és szükség esetén a `PersonController`) osztályt, hogy továbbra is megfelelően működjön!
