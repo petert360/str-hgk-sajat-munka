@@ -93,6 +93,10 @@ fetch('http://localhost:8000/person', {
 })
     .then(r => r.json())
     .then(d => console.log(d));
+
+
+Új vakcina teszt:
+
 */
 
 /*

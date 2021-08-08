@@ -15,6 +15,7 @@ mongoose.Promise = global.Promise;
 
 // router modulok importálása a /routes könyvtárból
 const personRouter = require('./routes/person');
+const vaccineRouter = require('./routes/vaccine');
 
 // swagger dokumentáció
 const swaggerUi = require('swagger-ui-express');
@@ -39,6 +40,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // route kezelés
 app.use('/person', personRouter);
+app.use('/vaccine', vaccineRouter);
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
